@@ -13,6 +13,11 @@ import com.shaibal.spring.security.config.CustomAuthenticationEntryPoint;
 @EnableWebSecurity
 public class SecurityBaseConfig extends WebSecurityConfigurerAdapter{
 
+	static final String[] PUBLIC_ANT_MATCHERS = {
+            "/swagger-ui.html", "/docs/index.html", "/v2/api-docs",
+            "/swagger-resources/**", "/configuration/*", "/error/*",
+            "/webjars/springfox-swagger-ui/**"};
+	
 	@Autowired
 	private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 	
@@ -28,6 +33,7 @@ public class SecurityBaseConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			.antMatchers(PUBLIC_ANT_MATCHERS).permitAll()
 		    .antMatchers("/login/**").permitAll()
 		    .antMatchers("/message/**").hasAuthority("USER")
 		    .anyRequest().authenticated()

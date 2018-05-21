@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+    tomcat:
+        build:
+            context: .
+            dockerfile: dockerfile-tomcat
+        ports:
+            - "8080:8080"
+            - "8082:8082"
+        links:
+            - redis:redis
+
+
+    redis:
+        image: redis:3.0.7
+        hostname: redis

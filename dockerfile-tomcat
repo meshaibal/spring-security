@@ -1,0 +1,16 @@
+FROM tomcat:8-jre8
+
+ADD ./target/spring-security.war /usr/local/tomcat/webapps/security.war
+
+RUN mkdir /var/log/apps
+
+ENV JPDA_ADDRESS="8000"
+ENV JPDA_TRANSPORT="dt_socket"
+
+EXPOSE 8082
+
+CMD ["catalina.sh", "jpda", "run"]
+
+#RUN sh -c "touch /usr/local/tomcat/webapps/security.war"
+
+#ENTRYPOINT ["sh", "-c", "java -jar /usr/local/tomcat/webapps/security.war"]
